@@ -1,8 +1,9 @@
+
 .i-amphtml-story-desktop-fullbleed .i-amphtml-cta-container {
-  /* Ad will be 75vh, align bottom of container to bottom of ad. */
-  bottom: 12.5vh !important;
-  /* 80% (default) - 12.5 (new bottom)*/
-  top: 67.5% !important;
+  /* Ad will be 75vh, align bottom of container to bottom of ad, but responsive */
+  bottom: min(12.5vh, 100px) !important;
+  /* Adjusted top to keep consistent proportions */
+  top: calc(100% - clamp(500px, 75vh, 900px)) !important;
 }
 
 .i-amphtml-glass-pane {
@@ -21,7 +22,7 @@ amp-story-page amp-ad iframe {
   height: 100%;
 }
 
-/* TODO(ccordry): refactor centering logic in amp-ad.css and remove this hack.  */
+/* TODO(ccordry): refactor centering logic in amp-ad.css and remove this hack. */
 amp-story-page amp-ad[data-a4a-upgrade-type='amp-ad-network-doubleclick-impl'],
 amp-story-page amp-ad[type='adsense'] {
   top: 0 !important;
@@ -36,14 +37,17 @@ amp-story-page amp-ad[type='adsense'] {
   left: 50% !important;
   right: auto !important;
   margin: auto !important;
-  min-height: 75vh !important;
-  max-height: 75vh !important;
-  min-width: calc(3 / 5 * 75vh) !important;
-  max-width: calc(3 / 5 * 75vh) !important;
+
+  /* Responsive ad scaling */
+  min-height: clamp(500px, 75vh, 900px) !important;
+  max-height: clamp(500px, 75vh, 900px) !important;
+  min-width: clamp(300px, calc(3 / 5 * 75vh), 600px) !important;
+  max-width: clamp(300px, calc(3 / 5 * 75vh), 600px) !important;
+
   transform: translateX(-50%) !important;
 }
 
-/* If experiment `story-ad-allow-fullbleed` is enabled, show fullbleed ads  */
+/* If experiment `story-ad-allow-fullbleed` is enabled, show fullbleed ads */
 .i-amphtml-story-desktop-fullbleed
   .i-amphtml-fullbleed-ad
   amp-story-grid-layer[template="fill"]
@@ -52,6 +56,9 @@ amp-story-page amp-ad[type='adsense'] {
   max-width: 100% !important;
   min-height: 100% !important;
   max-height: 100% !important;
+
+  /* Added font scaling for better readability on large displays */
+  font-size: clamp(14px, 1.2vw, 24px);
 }
 
 .i-amphtml-story-desktop-fullbleed .i-amphtml-fullbleed-ad iframe {
@@ -62,6 +69,9 @@ amp-story-page amp-ad[type='adsense'] {
 .i-amphtml-story-desktop-fullbleed
   .i-amphtml-fullbleed-ad
   .i-amphtml-cta-container {
-    bottom: 0 !important;
-    top: 0 !important;
+  bottom: 0 !important;
+  top: 0 !important;
+
+  /* Responsive text size for CTA on large resolutions */
+  font-size: clamp(14px, 1vw, 20px);
 }
